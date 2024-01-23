@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""
-Imports
-"""
+"""Imports"""
 import numpy as np
 
 
 def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99, epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
-    """
-    Sarsa Lambtha
-    """
+    """that performs SARSA(λ)"""
     for _ in range(episodes):
         state, _ = env.reset()
         epsilon = max(min_epsilon, epsilon - epsilon_decay)
@@ -34,9 +30,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1, gamm
 
 
 def epsilon_greedy(Q, state, epsilon, n_actions):
-    """
-    Epsilon Greedy
-    """
+    """Epsilon"""
     if np.random.rand() < epsilon:
         return np.random.choice(n_actions)
     return np.argmax(Q[state])
