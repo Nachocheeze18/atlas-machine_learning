@@ -7,7 +7,7 @@ API_ROOT = "https://swapi-api.alx-tools.com/api/"
 def availableShips(passengerCount):
     """Returns a list of starships that can
     hold the given number of passengers."""
-    page =  1
+    page = 1
     ships_list = []
 
     response = requests.get(API_ROOT + 'starships/?page={}'.format(page))
@@ -19,7 +19,7 @@ def availableShips(passengerCount):
                 continue
             if int(starship['passengers'].replace(',', '')) >= passengerCount:
                 ships_list.append(starship['name'])
-        page +=  1
+        page += 1
         response = requests.get(API_ROOT + 'starships/?page={}'.format(page))
         starships_data = response.json()
 
