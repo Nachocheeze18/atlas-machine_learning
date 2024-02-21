@@ -5,7 +5,8 @@ API_ROOT = "https://swapi-api.alx-tools.com/api/"
 
 
 def availableShips(passengerCount):
-    """Returns a list of starships that can hold the given number of passengers."""
+    """Returns a list of starships that can
+    hold the given number of passengers."""
     page =  1
     ships_list = []
 
