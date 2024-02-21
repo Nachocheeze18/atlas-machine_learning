@@ -15,7 +15,9 @@ def availableShips(passengerCount):
 
     while starships_data['next']:
         for starship in starships_data['results']:
-            if starship['passengers'] == 'n/a' or starship['passengers'] == 'unknown':
+            if starship['passengers'] == 'n/a':
+                continue
+            if starship['passengers'] == 'unknown':
                 continue
             if int(starship['passengers'].replace(',', '')) >= passengerCount:
                 ships_list.append(starship['name'])
