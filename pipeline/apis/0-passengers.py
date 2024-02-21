@@ -20,7 +20,8 @@ def availableShips(passengerCount):
             if int(starship['passengers'].replace(',', '')) >= passengerCount:
                 ships_list.append(starship['name'])
         page += 1
-        response = requests.get(API_ROOT + 'starships/?page={}'.format(page))
+        url = API_ROOT + 'starships/?page={}'.format(page)
+        response = requests.get(url)
         starships_data = response.json()
 
     return ships_list
