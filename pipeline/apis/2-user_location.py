@@ -4,7 +4,6 @@ import requests
 import sys
 import time
 
-
 def print_user_location(api_url):
     """script that prints the location of a specific user"""
     response = requests.get(api_url)
