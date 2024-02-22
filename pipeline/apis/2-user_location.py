@@ -17,13 +17,13 @@ def print_user_location(api_url):
         elif response.status_code ==  403:
             reset_time = response.headers.get('X-RateLimit-Reset')
             if reset_time:
-                print(f"Reset in {(int(reset_time) - int(time.time())) //  60} min")
+                print("Reset in {} min".format((int(reset_time) - int(time.time())) //  60))
             else:
                 print("Rate limit exceeded, but reset time not provided.")
         else:
-            print(f"Unexpected status code: {response.status_code}")
+            print("Unexpected status code: {}".format(response.status_code))
     except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+        print("An error occurred: {}".format(e))
     except ValueError:
         print("Invalid response from server.")
 
