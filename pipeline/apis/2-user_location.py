@@ -9,17 +9,18 @@ def print_user_location(api_url):
     """script that prints the location of a specific user"""
     try:
         response = requests.get(api_url)
-        user_data = response.json()
-
         if response.status_code == 200:
-            print(user_data['location'])
+            user_data = response.json()
+            if 'location' in user_data:
+                print(user_data['location'])
+            else:
+                print("Location not available for this user.")
         elif response.status_code == 404:
             print("Not found")
         elif response.status_code == 403:
             reset_time = response.headers.get('X-RateLimit-Reset')
             if reset_time:
-                print("Reset in {} min".format((int(
-                    reset_time) - int(time.time())) // 60))
+                print("Reset in {} min".format((int(reset_time) - int(time.time())) // 60))
             else:
                 print("Rate limit exceeded, but reset time not provided.")
         else:
@@ -37,3 +38,4 @@ if __name__ == "__main__":
     api_url = sys.argv[1] if len(sys.argv) > 1 else default_url
 
     print_user_location(api_url)
+
