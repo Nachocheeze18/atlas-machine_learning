@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Imports"""
 import requests
-
 API_ROOT = "https://swapi-api.alx-tools.com/api/"
+
 
 def sentientPlanets():
     """Returns a list of planets that are home to sentient species"""
@@ -12,11 +12,13 @@ def sentientPlanets():
     while True:
         response = requests.get(API_ROOT + 'species/?page={}'.format(page))
         species_data = response.json()
-        
+
         for species in species_data['results']:
-            if species['designation'] == 'sentient' or species['classification'] == 'sentient':
+            if species['designation'] == 'sentient':
+                continue
+            if species['classification'] == 'sentient':
                 species_planet_urls.extend([species['homeworld']])
-        
+
         if species_data['next']:
             page += 1
         else:
