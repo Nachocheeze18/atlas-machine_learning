@@ -17,6 +17,6 @@ if __name__ == "__main__":
     # Sort the results by the number of launches, in descending order
     sorted_result = sorted(rocket_launch_counts.items(), key=lambda x: (-x[1], x[0]))
 
-    # Print the results
+    # Print the results without using f-strings
     for rocket_name, launch_count in sorted_result:
-        print(f"{rocket_name}: {launch_count}")
+        print("{}: {}".format(rocket_name, launch_count))
