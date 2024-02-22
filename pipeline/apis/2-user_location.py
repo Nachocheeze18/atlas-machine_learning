@@ -11,15 +11,15 @@ def print_user_location(api_url):
         response = requests.get(api_url)
         user_data = response.json()
 
-        if response.status_code ==  200:
+        if response.status_code == 200:
             print(user_data['location'])
-        elif response.status_code ==  404:
+        elif response.status_code == 404:
             print("Not found")
-        elif response.status_code ==  403:
+        elif response.status_code == 403:
             reset_time = response.headers.get('X-RateLimit-Reset')
             if reset_time:
                 print("Reset in {} min".format((int(
-                    reset_time) - int(time.time())) //  60))
+                    reset_time) - int(time.time())) // 60))
             else:
                 print("Rate limit exceeded, but reset time not provided.")
         else:
