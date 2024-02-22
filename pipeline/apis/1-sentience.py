@@ -1,29 +1,44 @@
 #!/usr/bin/env python3
-"""imports"""
+"""
+Module to get a list of all planets that are home to sentient species
+"""
 import requests
+
+
 API_ROOT = "https://swapi-api.alx-tools.com/api/"
 
 
 def sentientPlanets():
-    """list of planets that are home to sentient species"""
-    page =  1
-    species_planet_urls = []
+    """
+    Returns:
+        list of planets that are home to sentient species
+    """
+    page = 1
+    species_planet_urls, planet_list = [], []
 
-    while True:
-        response = requests.get(f'{API_ROOT}species/?page={page}')
-        if response.status_code !=  200:
-            break
+    response = requests.get(API_ROOT + 'species/?page={}'.format(page))
+    species_data = response.json()
+
+    while species_data['next']:
+        response = requests.get(API_ROOT + 'species/?page={}'.format(page))
         species_data = response.json()
-        species_planet_urls.extend(
-            [species['homeworld'] for species in species_data['results']
-             if species.get('designation') == 'sentient' or species.get('classification') == 'sentient']
-        )
-        if not species_data['next']:
-            break
-        page +=  1
+        for species in species_data['results']:
+            if species['designation'] == 'sentient':
+                species_planet_urls.extend([species['homeworld']])
+            if species['classification'] == 'sentient':
+                species_planet_urls.extend([species['homeworld']])
+        page += 1
 
-    planet_list = [
-        requests.get(url).json()['name'] for url in species_planet_urls if url is not None
-    ]
+    for url in species_planet_urls:
+        if url is not None:
+            response = requests.get(url)
+            planet_data = response.json()
+            planet_list.append(planet_data['name'])
 
-    return planet_list
+    return(planet_list)
+
+
+if __name__ == "__main__":
+    planets = sentientPlanets()
+    for planet in planets:
+        print(planet)
