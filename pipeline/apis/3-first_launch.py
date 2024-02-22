@@ -8,11 +8,14 @@ if __name__ == "__main__":
     ROCKETS_URL = BASE_URL + 'rockets/'
     PADS_URL = BASE_URL + 'launchpads/'
 
+    # Fetch upcoming launches
     upcoming_response = requests.get(LAUNCHES_URL)
     upcoming_launches = upcoming_response.json()
 
+    # Find the upcoming launch with the earliest date
     min_launch = min(upcoming_launches, key=lambda l: l['date_local'])
 
+    # Fetch rocket and launchpad details
     rocket_response = requests.get(ROCKETS_URL + min_launch['rocket'])
     rocket_data = rocket_response.json()
     rocket = rocket_data['name']
@@ -22,4 +25,5 @@ if __name__ == "__main__":
     pad = pad_data['name']
     locality = pad_data['locality']
 
-    print(f"{min_launch['name']} ({min_launch['date_local']}){rocket} - {pad} ({locality})")
+    # Print the details of the upcoming launch
+    print(f"{min_launch['name']} ({min_launch['date_local']}) {rocket} - {pad} ({locality})")
