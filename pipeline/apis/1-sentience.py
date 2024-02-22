@@ -1,44 +1,37 @@
 #!/usr/bin/env python3
-"""
-Module to get a list of all planets that are home to sentient species
-"""
+"""Imports"""
 import requests
 
-
 API_ROOT = "https://swapi-api.alx-tools.com/api/"
-
 
 def sentientPlanets():
     """
     Returns:
         list of planets that are home to sentient species
     """
-    page = 1
-    species_planet_urls, planet_list = [], []
+    planet_list = []
+    page =   1
 
-    response = requests.get(API_ROOT + 'species/?page={}'.format(page))
-    species_data = response.json()
+    while True:
+        response = requests.get(f"{API_ROOT}species/?page={page}")
+        if response.status_code !=   200:
+            print("Error fetching species data:", response.status_code)
+            break
 
-    while species_data['next']:
-        response = requests.get(API_ROOT + 'species/?page={}'.format(page))
         species_data = response.json()
+        if not species_data['next']:
+            break
+
         for species in species_data['results']:
-            if species['designation'] == 'sentient':
-                species_planet_urls.extend([species['homeworld']])
-            if species['classification'] == 'sentient':
-                species_planet_urls.extend([species['homeworld']])
-        page += 1
+            # Check if 'species_classification' key exists and is 'sentient'
+            if 'species_classification' in species and species['species_classification'] == 'sentient' and species['homeworld']:
+                planet_response = requests.get(species['homeworld'])
+                if planet_response.status_code ==   200:
+                    planet_data = planet_response.json()
+                    planet_list.append(planet_data['name'])
+                else:
+                    print("Error fetching planet data:", planet_response.status_code)
 
-    for url in species_planet_urls:
-        if url is not None:
-            response = requests.get(url)
-            planet_data = response.json()
-            planet_list.append(planet_data['name'])
+        page +=   1
 
-    return(planet_list)
-
-
-if __name__ == "__main__":
-    planets = sentientPlanets()
-    for planet in planets:
-        print(planet)
+    return (planet_list)
