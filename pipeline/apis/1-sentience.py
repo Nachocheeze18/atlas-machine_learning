@@ -14,9 +14,8 @@ def sentientPlanets():
         species_data = response.json()
 
         for species in species_data['results']:
-            if species['designation'] == 'sentient':
-                continue
-            if species['classification'] == 'sentient':
+            if (species['designation'] == 'sentient' or
+                species['classification'] == 'sentient'):
                 species_planet_urls.extend([species['homeworld']])
 
         if species_data['next']:
