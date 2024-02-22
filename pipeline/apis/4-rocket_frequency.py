@@ -5,7 +5,6 @@ if __name__ == "__main__":
     from collections import Counter
     LAUNCH_URL = 'https://api.spacexdata.com/v5/launches'
 
-
     launch_response = requests.get(LAUNCH_URL)
     launch_data = launch_response.json()
 
