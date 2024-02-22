@@ -26,4 +26,5 @@ if __name__ == "__main__":
     locality = pad_data['locality']
 
     # Print the details of the upcoming launch
-    print("{} ({}) {} - {} ({})".format(min_launch['name'], min_launch['date_local'], rocket, pad, locality))
+    print("{} ({}) {} - {} ({})".format(min_launch['name'],
+                                        min_launch['date_local'], rocket, pad, locality))
