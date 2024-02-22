@@ -4,6 +4,7 @@ import requests
 import sys
 import time
 
+
 def print_user_location(api_url):
     """script that prints the location of a specific user"""
     try:
@@ -26,6 +27,7 @@ def print_user_location(api_url):
         print("An error occurred: {}".format(e))
     except ValueError:
         print("Invalid response from server.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) !=  2:
