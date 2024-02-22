@@ -11,15 +11,15 @@ def print_user_location(api_url):
         response = requests.get(api_url)
         user_data = response.json()
 
-        if response.status_code == 200:
+        if response.status_code ==  200:
             print(user_data['location'])
-        elif response.status_code == 404:
+        elif response.status_code ==  404:
             print("Not found")
-        elif response.status_code == 403:
+        elif response.status_code ==  403:
             reset_time = response.headers.get('X-RateLimit-Reset')
             if reset_time:
                 print("Reset in {} min".format((int(
-                    reset_time) - int(time.time())) // 60))
+                    reset_time) - int(time.time())) //  60))
             else:
                 print("Rate limit exceeded, but reset time not provided.")
         else:
@@ -31,8 +31,9 @@ def print_user_location(api_url):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: ./2-user_location https://api.github.com/users/<user>")
-        sys.exit(1)
+    # Default URL for a GitHub user
+    default_url = "https://api.github.com/users/octocat"
 
-    print_user_location(sys.argv[1])
+    api_url = sys.argv[1] if len(sys.argv) > 1 else default_url
+
+    print_user_location(api_url)
