@@ -1,4 +1,4 @@
-#!/usr/bin/env/python3
+#!/usr/bin/env python3
 """imports"""
 import requests
 API_ROOT = "https://swapi-api.alx-tools.com/api/"
