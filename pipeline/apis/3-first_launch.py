@@ -8,23 +8,30 @@ if __name__ == "__main__":
     ROCKETS_URL = BASE_URL + 'rockets/'
     PADS_URL = BASE_URL + 'launchpads/'
 
-    # Fetch upcoming launches
     upcoming_response = requests.get(LAUNCHES_URL)
     upcoming_launches = upcoming_response.json()
 
-    # Find the upcoming launch with the earliest date
-    min_launch = min(upcoming_launches, key=lambda l: l['date_local'])
+    earliest_date = None
+    earliest_launches = []
 
-    # Fetch rocket and launchpad details
-    rocket_response = requests.get(ROCKETS_URL + min_launch['rocket'])
-    rocket_data = rocket_response.json()
-    rocket = rocket_data['name']
+    for launch in upcoming_launches:
+        launch_date = launch['date_local']
+        if earliest_date is None or launch_date < earliest_date:
+            earliest_date = launch_date
+            earliest_launches = [launch]
+        elif launch_date == earliest_date:
+            earliest_launches.append(launch)
 
-    pad_response = requests.get(PADS_URL + min_launch['launchpad'])
-    pad_data = pad_response.json()
-    pad = pad_data['name']
-    locality = pad_data['locality']
+    for launch in earliest_launches:
+        rocket_response = requests.get(ROCKETS_URL + launch['rocket'])
+        rocket_data = rocket_response.json()
+        rocket = rocket_data['name']
 
-    # Print the details of the upcoming launch
-    print("{} ({}) {} - {} ({})".format(min_launch['name'],
-                                        min_launch['date_local'], rocket, pad, locality))
+        pad_response = requests.get(PADS_URL + launch['launchpad'])
+        pad_data = pad_response.json()
+        pad = pad_data['name']
+        locality = pad_data['locality']
+
+        print("{} ({}) {} - {} ({})".format(
+            launch['name'], launch['date_local'],
+            rocket, pad, locality))
