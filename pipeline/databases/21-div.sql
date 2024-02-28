@@ -1,13 +1,12 @@
--- creates a function SafeDiv that divides
 CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS INT
+RETURNS VARCHAR(255)
 BEGIN
-    DECLARE result INT;
+    DECLARE result VARCHAR(255);
     
     IF b = 0 THEN
-        SET result = 0;
+        SET result = CONCAT('SafeDiv(', a, ', ', b, ')0');
     ELSE
-        SET result = a / b;
+        SET result = CONCAT('SafeDiv(', a, ', ', b, ')', a / b);
     END IF;
     
     RETURN result;
