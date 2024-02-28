@@ -1,15 +1,13 @@
 -- lists all bands with Glam rock as their main style,
 SELECT 
-band_name,
-CASE
-WHEN years_active LIKE '%–%' THEN
-(CAST(SUBSTRING_INDEX(years_active, '-', -1) AS UNSIGNED) - CAST(SUBSTRING_INDEX(years_active, '-', 1) AS UNSIGNED))
-ELSE
-(2020 - CAST(SUBSTRING_INDEX(years_active, '-', 1) AS UNSIGNED))
-END AS lifespan
+    band_name,
+    CASE 
+        WHEN split IS NOT NULL THEN split - formed
+        ELSE 2020 - formed
+    END AS lifespan_until_2020
 FROM 
-metal_bands
+    metal_bands
 WHERE 
-style LIKE '%Glam rock%'
+    style LIKE '%Glam rock%'
 ORDER BY 
-lifespan DESC;
+    lifespan_until_2020 DESC;
