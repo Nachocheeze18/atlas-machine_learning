@@ -1,5 +1,5 @@
 -- lists shows by rating
 SELECT title, SUM(rating) AS rating_sum
-FROM hbtn_0d_tvshows_rate
+FROM tv_shows
 GROUP BY title
 ORDER BY rating_sum DESC;
