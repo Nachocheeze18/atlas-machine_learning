@@ -1,4 +1,4 @@
--- Create or replace the stored procedure
+-- store average score
 DELIMITER //
 
 CREATE PROCEDURE ComputeAverageScoreForUser (
