@@ -1,3 +1,4 @@
+-- creates a function SafeDiv
 CREATE FUNCTION SafeDiv(a INT, b INT)
 RETURNS VARCHAR(255)
 BEGIN
