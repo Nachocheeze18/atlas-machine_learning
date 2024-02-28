@@ -1,14 +1,14 @@
 -- creates a function SafeDiv
-CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS VARCHAR(255)
+DELIMITER //
+CREATE FUNCTION SafeDiv(a INT, b INT) RETURNS FLOAT
 BEGIN
-    DECLARE result VARCHAR(255);
-    
-    IF b = 0 THEN
-        SET result = CONCAT('SafeDiv(', a, ', ', b, ')0');
+    DECLARE result FLOAT;
+        IF b = 0 THEN
+        SET result = 0;
     ELSE
-        SET result = CONCAT('SafeDiv(', a, ', ', b, ')', a / b);
+        SET result = a / b;
     END IF;
-    
     RETURN result;
 END;
+//
+DELIMITER ;
