@@ -6,7 +6,7 @@ FOR EACH ROW
 BEGIN
     -- Decrease the quantity of the item in the items table
     UPDATE items
-    SET quantity = quantity - NEW.quantity
+    SET quantity = quantity - NEW.number
     WHERE name = NEW.item_name;
 END;
 //
